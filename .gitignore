@@ -1,1 +1,20 @@
 *~
+# autoconf generated files
+Makefile.in
+aclocal.m4
+autom4te.cache/
+config.h.in
+configure
+depcomp
+install-sh
+missing
+
+# other
+*.o
+.deps/
+Makefile
+config.h
+config.log
+config.status
+stamp-h1
+tweet
