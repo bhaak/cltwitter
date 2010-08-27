@@ -11,9 +11,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
 
 # Checks for libraries.
-AC_CHECK_LIB(xml2, xmlFree, [CFLAGS+=" `xml2-config --cflags`" LIBS+=" `xml2-config --libs`"], [AC_MSG_ERROR(libxml2 not found.)])
-AC_CHECK_LIB(curl, curl_easy_init, [], [AC_MSG_ERROR(libpcre not found.)])
-AC_CHECK_LIB(pcre, pcre_compile, [], [AC_MSG_ERROR(libpcre not found.)])
+AC_CHECK_LIB(curl, curl_easy_init, [], [AC_MSG_ERROR(libcurl not found.)])
 AC_CHECK_LIB(oauth, oauth_sign_rsa_sha1, [], [AC_MSG_ERROR(liboauth not found.)])
 
 # Checks for header files.

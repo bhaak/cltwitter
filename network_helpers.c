@@ -50,43 +50,6 @@ size_t write_to_memory(void* ptr, size_t size, size_t nmemb, void* data) {
   return realsize;
 }
 
-char *shorten_url(char *url) {
-  char *is_gd_url, *url_encoded_url = url_encode(url);
-  size_t size = strlen(IS_GD_API) + strlen(url_encoded_url) + 1;
-  CURLcode res;
-  CURL *curl;
-  long response_code;
-  memory response_data = {NULL, 0};
-  
-  is_gd_url = malloc(size);
-  SNPRINTF(is_gd_url, size, "%s%s", IS_GD_API, url_encoded_url);
-  free(url_encoded_url);
-  
-  curl = curl_easy_init();
-  
-  if (curl) {
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_to_memory);
-    curl_easy_setopt(curl, CURLOPT_USERAGENT, "cltwitter (" VERSION ")");
-    curl_easy_setopt(curl, CURLOPT_URL, is_gd_url);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_data);
-    res = curl_easy_perform(curl);
-    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
-    curl_easy_cleanup(curl); 
-    free(is_gd_url);
-    is_gd_url = NULL;
-     
-    if (res != CURLE_OK)
-      COMPLAIN_AND_EXIT("(is.gd) Error: %s\n", curl_easy_strerror(res));
-    if (response_code != OK)
-      COMPLAIN_AND_EXIT("(is.gd) %s (#%lu)\n", response_data.memory, response_code);
-  }
-  
-  if (is_gd_url)
-    free(is_gd_url);
-  
-  return response_data.memory;
-}
-
 char *response_message(unsigned long response_code) {
   switch (response_code) {
     case OK:
